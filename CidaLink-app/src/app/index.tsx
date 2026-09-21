@@ -1,98 +1,161 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import { useState } from "react";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+export default function LoginScreen() {
+  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+    <View style={styles.container}>
+      <View style={styles.content}>
+        <Image
+          source={require("@/assets/images/LogoCida.png")}
+          style={styles.logo}
+        ></Image>
+        <Text style={styles.title}>Que bom te ver de volta!</Text>
+        <Text style={styles.subtitle}>Acesse sua conta para cintinuar</Text>
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
+        <Text style={styles.label}>E-mail</Text>
+        <View style={styles.inputContainer}>
+          <Ionicons
+            name="mail-outline"
+            size={18}
+            color="#666"
+            style={styles.inputIcon}
           />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
+          <TextInput
+            style={styles.Input}
+            placeholder="seu email@exemplo.com"
+            placeholderTextColor={"#999"}
+            keyboardType="email-address"
+            autoCapitalize="none"
           />
-        </ThemedView>
+        </View>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+        <Text style={styles.label}>Senha</Text>
+        <View style={styles.inputContainer}>
+          <Ionicons
+            name="lock-closed-outline"
+            size={18}
+            color="#666"
+            style={styles.inputIcon}
+          />
+          <TextInput
+            style={styles.Input}
+            placeholder="sua senha segura"
+            placeholderTextColor="#999"
+            secureTextEntry={!showPassword}
+          />
+          <Ionicons
+            name={showPassword ? "eye-outline" : "eye-off-outline"}
+            size={18}
+            color="#666"
+            onPress={() => setShowPassword(!showPassword)}
+          />
+        </View>
+        <Text style={styles.recsenha}>Esqueceu a senha?</Text>
+        <TouchableOpacity style={styles.loginButton} onPress={() => {}}>
+          <Text style={{ color: "#fff", fontSize: 16, fontWeight: "bold" }}>
+            Entrar
+          </Text>
+        </TouchableOpacity>
+        <View style={{ alignItems: "center" }}>
+          <Text style={{ fontSize: 15, color: "#555", marginBottom: 5 }}>
+            Ainda não tem uma conta?
+          </Text>
+          <TouchableOpacity onPress={() => router.push("/cadastro")}>
+            <Text
+              style={{ fontSize: 15, color: "#2e7d32", fontWeight: "bold" }}
+            >
+              Cadastre-se
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    backgroundColor: "#ffffff",
   },
-  safeArea: {
+  content: {
     flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+    alignItems: "center",
+    paddingHorizontal: 24,
+    paddingTop: 60,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+
+  text: {
+    color: "#000000",
+    fontSize: 18,
   },
   title: {
-    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#1a1a1a",
+    marginBottom: 8,
+    textAlign: "center",
   },
-  code: {
-    textTransform: 'uppercase',
+  subtitle: {
+    fontSize: 14,
+    color: "#6b6b6b",
+    marginBottom: 24,
+    textAlign: "center",
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  logo: {
+    width: 200,
+    height: 200,
+    resizeMode: "contain",
+  },
+  label: {
+    fontSize: 13,
+    color: "#555",
+    marginBottom: 6,
+    alignSelf: "flex-start",
+    marginLeft: 4,
+  },
+
+  inputContainer: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#e8e8e8",
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    marginBottom: 16,
+  },
+  Input: {
+    flex: 1,
+    paddingVertical: 14,
+    fontSize: 14,
+  },
+  recsenha: {
+    fontSize: 15,
+    color: "#999",
+    textDecorationLine: "underline",
+    marginBottom: 24,
+  },
+  loginButton: {
+    width: "100%",
+    backgroundColor: "#2e7d32",
+    borderRadius: 30,
+    paddingVertical: 14,
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  inputIcon: {
+    marginRight: 8,
   },
 });
