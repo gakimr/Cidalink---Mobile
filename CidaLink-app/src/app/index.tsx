@@ -63,7 +63,7 @@ export default function LoginScreen() {
           />
         </View>
         <Text style={styles.recsenha}>Esqueceu a senha?</Text>
-        <TouchableOpacity style={styles.loginButton} onPress={() => {}}>
+        <TouchableOpacity style={styles.loginButton} onPress={() => router.push("../feed")} >
           <Text style={{ color: "#fff", fontSize: 16, fontWeight: "bold" }}>
             Entrar
           </Text>
