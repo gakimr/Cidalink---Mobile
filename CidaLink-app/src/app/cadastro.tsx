@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
   StyleSheet,
@@ -12,10 +13,17 @@ import {
 export default function CadastroScreen() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.back()}
+        >
+          <Ionicons name="arrow-back" size={24} color="#333" />
+        </TouchableOpacity>
         <Text style={styles.title}>Crie a sua conta!</Text>
         <Text style={styles.subtitle}>
           Junte-se a nós pra transformar a cidade. É rápido!
@@ -176,5 +184,9 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  backButton: {
+    alignSelf: "flex-start",
+    marginBottom: 16,
   },
 });
