@@ -1,4 +1,3 @@
-import Footer from "@/components/Footer";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -118,7 +117,6 @@ export default function CadastroScreen() {
           <Text style={styles.registerButtonText}>Cadastre-se</Text>
         </TouchableOpacity>
       </View>
-      <Footer />
     </View>
   );
 }
