@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -63,7 +64,10 @@ export default function LoginScreen() {
           />
         </View>
         <Text style={styles.recsenha}>Esqueceu a senha?</Text>
-        <TouchableOpacity style={styles.loginButton} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.loginButton}
+          onPress={() => router.push("/feed")}
+        >
           <Text style={{ color: "#fff", fontSize: 16, fontWeight: "bold" }}>
             Entrar
           </Text>
@@ -81,6 +85,7 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
       </View>
+      <Footer />
     </View>
   );
 }
@@ -94,7 +99,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     paddingHorizontal: 24,
-    paddingTop: 60,
+    paddingTop: 50,
   },
 
   text: {

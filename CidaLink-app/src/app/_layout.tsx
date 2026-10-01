@@ -1,5 +1,12 @@
-import { Stack } from "expo-router";
+import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
+import { Slot } from 'expo-router';
+import { useColorScheme } from 'react-native';
 
 export default function RootLayout() {
-  return <Stack screenOptions={{ headerShown: false }} />;
+  const colorScheme = useColorScheme();
+  return (
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <Slot />
+    </ThemeProvider>
+  );
 }
